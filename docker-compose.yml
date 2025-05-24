@@ -1,0 +1,33 @@
+name: fivempkg-dev
+
+services:
+  redis:
+    image: redis:latest
+    container_name: fivempkg-redis
+    environment:
+      REDIS_PASSWORD: fivempkg
+    ports:
+      - "6379:6379"
+    networks:
+      - fivemanage
+  fivempkg-db:
+    image: postgres:latest
+    container_name: fivempkg-db
+    environment:
+      POSTGRES_USER: fivempkg
+      POSTGRES_PASSWORD: fivempkg
+      POSTGRES_DB: fivempkg
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker/fivempkg-db:/var/lib/postgresql/data
+
+
+networks:
+  fivemanage:
+    driver: bridge
+
+volumes:
+  cache: {
+    driver: local
+  }
