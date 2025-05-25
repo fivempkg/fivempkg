@@ -4,24 +4,30 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "dev": "pnpm dotenv -- node server.js",
+    "db:generate": "dotenv -- drizzle-kit generate",
+    "db:migrate": "dotenv -- drizzle-kit migrate",
+    "start": "node server.js",
+    "typecheck": "react-router typegen && tsc -b"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "@react-router/express": "^7.6.1",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
     "better-auth": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "compression": "^1.8.0",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
-    "isbot": "^5.1.27",
+    "express": "^5.1.0",
+    "isbot": "^5.1.28",
     "lucide-react": "^0.511.0",
-    "pg": "^8.16.0",
+    "morgan": "^1.10.0",
+    "postgres": "^3.4.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.4",
@@ -32,10 +38,15 @@
   "devDependencies": {
     "@react-router/dev": "^7.5.3",
     "@tailwindcss/vite": "^4.1.4",
+    "@types/compression": "^1.8.0",
+    "@types/express": "^5.0.2",
+    "@types/express-serve-static-core": "^5.0.6",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20",
     "@types/pg": "^8.15.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.1",
     "tailwindcss": "^4.1.4",
     "tsx": "^4.19.4",
@@ -45,4 +56,3 @@
     "vite-tsconfig-paths": "^5.1.4"
   }
 }
-
