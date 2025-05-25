@@ -1,3 +1,4 @@
+import { relations, type InferSelectModel } from "drizzle-orm";
 import {
   pgTable,
   text,
@@ -223,3 +224,19 @@ export const packageTags = pgTable(
     packageIdx: index("package_tags_package_idx").on(table.packageId),
   })
 );
+
+export const packageRelations = relations(packages, ({ many }) => ({
+  packageVersions: many(packageVersions),
+}));
+
+export const packageVersionsRelations = relations(
+  packageVersions,
+  ({ one }) => ({
+    package: one(packages, {
+      fields: [packageVersions.packageId],
+      references: [packages.id],
+    }),
+  })
+);
+
+export type Package = InferSelectModel<typeof packages>;

@@ -4,6 +4,8 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import PackageSearch from "~/components/Search/PackageSearch";
 import { database } from "~/database/context";
+import { desc, eq } from "drizzle-orm";
+import { packages, packageVersions } from "~/database/schema";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -13,7 +15,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
-  const pkgs = await database().query.packages.findMany();
+  const pkgs = await database().query.packages.findMany({
+    with: {
+      packageVersions: {
+        orderBy: desc(packageVersions.publishedAt),
+        limit: 1,
+      },
+    },
+  });
   return pkgs;
 }
 
