@@ -28,7 +28,7 @@ const authSchema = z.object({
 
 type AuthFormValues = z.infer<typeof authSchema>;
 
-export function LoginForm({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
@@ -59,15 +59,35 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter the details below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...formMethods}>
             <form onSubmit={formMethods.handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-6">
+                <div className="grid gap-2">
+                  <FormField
+                    name="username"
+                    control={formMethods.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            id="username"
+                            type="text"
+                            placeholder="config developer"
+                            required
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <div className="grid gap-2">
                   <FormField
                     name="email"
@@ -94,15 +114,7 @@ export function LoginForm({
                     control={formMethods.control}
                     render={({ field }) => (
                       <FormItem>
-                        <div className="flex items-center">
-                          <FormLabel htmlFor="email">Password</FormLabel>
-                          <a
-                            href="#"
-                            className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                          >
-                            Forgot your password?
-                          </a>
-                        </div>
+                        <FormLabel htmlFor="email">Password</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -116,16 +128,13 @@ export function LoginForm({
                   />
                 </div>
                 <Button type="submit" className="w-full">
-                  Login
+                  Create account
                 </Button>
-                {/*<Button variant="outline" className="w-full">
-                Login with Google
-              </Button>*/}
               </div>
               <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link to="/signup" className="underline underline-offset-4">
-                  Sign up
+                Already have an account?{" "}
+                <Link to="/login" className="underline underline-offset-4">
+                  Sign in
                 </Link>
               </div>
             </form>
